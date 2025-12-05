@@ -140,15 +140,15 @@ export const Summary: React.FC<{ event: EventData }> = ({ event }) => {
 
     return (
         <>
-            <Card className="bg-gray-900 text-white p-6 shadow-xl shadow-gray-200 mt-8">
+            <Card className="bg-white text-gray-900 p-6 shadow-xl shadow-gray-200 mt-8 border border-gray-100">
                 <div className="flex items-center justify-between mb-6">
                     <div className="flex items-center gap-3">
-                        <div className="p-3 bg-white/10 rounded-full">
-                            <PieChart className="w-6 h-6 text-rose-300" />
+                        <div className="p-3 bg-rose-50 rounded-full">
+                            <PieChart className="w-6 h-6 text-rose-600" />
                         </div>
                         <div>
-                            <h3 className="text-lg font-medium text-gray-300">الإجمالي النهائي</h3>
-                            <div className="text-3xl font-bold mt-1 text-white">
+                            <h3 className="text-lg font-bold text-gray-600">الإجمالي النهائي</h3>
+                            <div className="text-4xl font-extrabold mt-1 text-black">
                                 {formatCurrency(grandTotal)}
                             </div>
                         </div>
@@ -214,8 +214,8 @@ export const Summary: React.FC<{ event: EventData }> = ({ event }) => {
                 </div>
 
                 <div className="mt-8 pt-6 border-t-2 border-gray-900 flex justify-between items-center">
-                    <h2 className="text-2xl font-bold">الإجمالي النهائي</h2>
-                    <span className="text-3xl font-bold text-rose-600">{formatCurrency(grandTotal)}</span>
+                    <h2 className="text-2xl font-bold text-black">الإجمالي النهائي</h2>
+                    <span className="text-3xl font-extrabold text-black">{formatCurrency(grandTotal)}</span>
                 </div>
             </div>
         </>
