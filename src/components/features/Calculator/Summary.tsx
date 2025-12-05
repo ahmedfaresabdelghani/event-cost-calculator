@@ -4,7 +4,7 @@ import { formatCurrency } from '../../../utils/helpers';
 import { Card } from '../../ui/Card';
 import { Download, PieChart } from 'lucide-react';
 import { Button } from '../../ui/Button';
-import * as XLSX from 'xlsx';
+import XLSX from 'xlsx-js-style';
 import html2canvas from 'html2canvas';
 
 export const Summary: React.FC<{ event: EventData }> = ({ event }) => {
@@ -14,54 +14,106 @@ export const Summary: React.FC<{ event: EventData }> = ({ event }) => {
 
     const handleExportExcel = () => {
         const wb = XLSX.utils.book_new();
-        wb.Workbook = { Views: [{ RTL: true }] }; // Force workbook to accept RTL view preference
+        wb.Workbook = { Views: [{ RTL: true }] };
 
-        const data: any[] = [];
+        // Define Styles
+        const headerStyle = {
+            fill: { fgColor: { rgb: "FFE4E6" } }, // Rose-100
+            font: { name: "Tajawal", sz: 14, bold: true, color: { rgb: "E11D48" } }, // Rose-600
+            alignment: { horizontal: "center", vertical: "center" },
+            border: { top: { style: "thin" }, bottom: { style: "thick", color: { rgb: "E11D48" } }, left: { style: "thin" }, right: { style: "thin" } }
+        };
 
-        // 1. Meta Data
-        data.push(['تقرير تكاليف المناسبة']);
-        data.push([`المناسبة: ${event.customName || 'بدون اسم'}`]);
-        data.push([`التاريخ: ${new Date().toLocaleDateString('ar-EG')}`]);
-        data.push(['']); // Spacer
+        const sectionHeaderStyle = {
+            fill: { fgColor: { rgb: "F3F4F6" } }, // Gray-100
+            font: { name: "Tajawal", sz: 12, bold: true, color: { rgb: "1F2937" } },
+            alignment: { horizontal: "right", vertical: "center" },
+            border: { bottom: { style: "thin" } }
+        };
+
+        const cellStyle = {
+            font: { name: "Tajawal", sz: 11 },
+            alignment: { horizontal: "right", vertical: "center" },
+            border: { bottom: { style: "thin", color: { rgb: "E5E7EB" } } }
+        };
+
+        const numberStyle = {
+            ...cellStyle,
+            alignment: { horizontal: "center" }
+        };
+
+        const totalStyle = {
+            fill: { fgColor: { rgb: "FFF1F2" } },
+            font: { name: "Tajawal", sz: 12, bold: true, color: { rgb: "9F1239" } },
+            alignment: { horizontal: "center" },
+            border: { top: { style: "double" } }
+        };
+
+        const rows: any[] = [];
+
+        // 1. Meta Data (Simple rows)
+        rows.push([{ v: 'تقرير تكاليف المناسبة', s: headerStyle }]);
+        rows.push([{ v: `المناسبة: ${event.customName || 'بدون اسم'}`, s: cellStyle }]);
+        rows.push([{ v: `التاريخ: ${new Date().toLocaleDateString('ar-EG')}`, s: cellStyle }]);
+        rows.push([]); // Spacer
 
         // 2. Table Header
-        data.push(['القسم', 'البند', 'العدد', 'السعر', 'الإجمالي']);
+        const headers = ['القسم', 'البند', 'العدد', 'السعر', 'الإجمالي'];
+        rows.push(headers.map(h => ({ v: h, s: headerStyle })));
 
         // 3. Data Rows
         event.sections.forEach(section => {
             const activeItems = section.items.filter(i => i.isChecked);
             if (activeItems.length > 0) {
                 activeItems.forEach(item => {
-                    data.push([section.title, item.name, item.quantity, item.price, item.total]);
+                    rows.push([
+                        { v: section.title, s: cellStyle },
+                        { v: item.name, s: cellStyle },
+                        { v: item.quantity, s: numberStyle },
+                        { v: item.price, s: numberStyle },
+                        { v: item.total, s: numberStyle }
+                    ]);
                 });
-                // Section Subtotal Row
+                // Section Subtotal
                 const sectionTotal = activeItems.reduce((a, b) => a + b.total, 0);
-                data.push(['', 'إجمالي ' + section.title, '', '', sectionTotal]);
-                data.push(['']); // Spacer
+                rows.push([
+                    { v: '', s: sectionHeaderStyle },
+                    { v: 'إجمالي ' + section.title, s: sectionHeaderStyle },
+                    { v: '', s: sectionHeaderStyle },
+                    { v: '', s: sectionHeaderStyle },
+                    { v: sectionTotal, s: { ...sectionHeaderStyle, alignment: { horizontal: "center" } } }
+                ]);
             }
         });
 
         // 4. Grand Total
-        data.push(['', '', '', 'الإجمالي النهائي', grandTotal]);
+        rows.push([
+            { v: '', s: totalStyle },
+            { v: '', s: totalStyle },
+            { v: '', s: totalStyle },
+            { v: 'الإجمالي النهائي', s: totalStyle },
+            { v: grandTotal, s: totalStyle }
+        ]);
 
-        // Create Sheet
-        const ws = XLSX.utils.aoa_to_sheet(data);
+        const ws = XLSX.utils.aoa_to_sheet(rows);
 
-        // 5. Apply RTL and Column Widths
-        ws['!dir'] = 'rtl'; // Sheet-level RTL
+        // 5. Column Widths
+        ws['!dir'] = 'rtl';
         ws['!cols'] = [
-            { wch: 20 }, // Section
-            { wch: 30 }, // Item
+            { wch: 25 }, // Section
+            { wch: 35 }, // Item
             { wch: 10 }, // Qty
             { wch: 15 }, // Price
-            { wch: 20 }, // Total
+            { wch: 25 }, // Total
         ];
 
-        // 6. Merge simple cells for title (optional but nice)
-        // ws['!merges'] = [{ s: { r: 0, c: 0 }, e: { r: 0, c: 4 } }];
+        // 6. Merges for Title rows
+        ws['!merges'] = [
+            { s: { r: 0, c: 0 }, e: { r: 0, c: 4 } }, // Main Title
+        ];
 
         XLSX.utils.book_append_sheet(wb, ws, "التكاليف");
-        XLSX.writeFile(wb, `event_costs_${Date.now()}.xlsx`);
+        XLSX.writeFile(wb, `event_costs_styled_${Date.now()}.xlsx`);
     };
 
     const handleExportImage = async () => {
