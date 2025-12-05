@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-['Tajawal'] bg-gray-50 text-gray-900;
+  }
+}
+
+@layer components {
+  /* Custom Scrollbar for nicer look */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-rose-200 rounded-full hover:bg-rose-300 transition-colors;
+  }
+}
