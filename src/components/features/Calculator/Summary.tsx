@@ -14,26 +14,52 @@ export const Summary: React.FC<{ event: EventData }> = ({ event }) => {
 
     const handleExportExcel = () => {
         const wb = XLSX.utils.book_new();
+        wb.Workbook = { Views: [{ RTL: true }] }; // Force workbook to accept RTL view preference
+
         const data: any[] = [];
 
-        // Header
+        // 1. Meta Data
+        data.push(['تقرير تكاليف المناسبة']);
+        data.push([`المناسبة: ${event.customName || 'بدون اسم'}`]);
+        data.push([`التاريخ: ${new Date().toLocaleDateString('ar-EG')}`]);
+        data.push(['']); // Spacer
+
+        // 2. Table Header
         data.push(['القسم', 'البند', 'العدد', 'السعر', 'الإجمالي']);
 
+        // 3. Data Rows
         event.sections.forEach(section => {
-            section.items.forEach(item => {
-                if (item.isChecked) {
+            const activeItems = section.items.filter(i => i.isChecked);
+            if (activeItems.length > 0) {
+                activeItems.forEach(item => {
                     data.push([section.title, item.name, item.quantity, item.price, item.total]);
-                }
-            });
-            // Section subtotal
-            const sectionTotal = section.items.filter(i => i.isChecked).reduce((a, b) => a + b.total, 0);
-            data.push([section.title + ' - الإجمالي', '', '', '', sectionTotal]);
-            data.push(['', '', '', '', '']); // Spacer
+                });
+                // Section Subtotal Row
+                const sectionTotal = activeItems.reduce((a, b) => a + b.total, 0);
+                data.push(['', 'إجمالي ' + section.title, '', '', sectionTotal]);
+                data.push(['']); // Spacer
+            }
         });
 
-        data.push(['الإجمالي النهائي', '', '', '', grandTotal]);
+        // 4. Grand Total
+        data.push(['', '', '', 'الإجمالي النهائي', grandTotal]);
 
+        // Create Sheet
         const ws = XLSX.utils.aoa_to_sheet(data);
+
+        // 5. Apply RTL and Column Widths
+        ws['!dir'] = 'rtl'; // Sheet-level RTL
+        ws['!cols'] = [
+            { wch: 20 }, // Section
+            { wch: 30 }, // Item
+            { wch: 10 }, // Qty
+            { wch: 15 }, // Price
+            { wch: 20 }, // Total
+        ];
+
+        // 6. Merge simple cells for title (optional but nice)
+        // ws['!merges'] = [{ s: { r: 0, c: 0 }, e: { r: 0, c: 4 } }];
+
         XLSX.utils.book_append_sheet(wb, ws, "التكاليف");
         XLSX.writeFile(wb, `event_costs_${Date.now()}.xlsx`);
     };
