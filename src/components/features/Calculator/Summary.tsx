@@ -50,49 +50,89 @@ export const Summary: React.FC<{ event: EventData }> = ({ event }) => {
         };
 
         const rows: any[] = [];
+        let currentRowIndex = 0;
 
         // 1. Meta Data
         rows.push([{ v: 'تقرير تكاليف المناسبة', s: headerStyle }]);
         rows.push([{ v: `المناسبة: ${event.customName || 'بدون اسم'}`, s: cellStyle }]);
         rows.push([{ v: `التاريخ: ${new Date().toLocaleDateString('ar-EG')}`, s: cellStyle }]);
         rows.push([]);
+        currentRowIndex += 4; // 4 rows added
 
         // 2. Table Header
         const headers = ['القسم', 'البند', 'العدد', 'السعر', 'الإجمالي'];
         rows.push(headers.map(h => ({ v: h, s: headerStyle })));
+        currentRowIndex += 1;
 
         // 3. Data Rows
+        const sectionTotalCells: string[] = [];
+
         event.sections.forEach(section => {
             const activeItems = section.items.filter(i => i.isChecked);
             if (activeItems.length > 0) {
+                const sectionStartRow = currentRowIndex + 2; // +1 because logic wants next row, +1 because Excel is 1-based?
+                // Logic: 
+                // currentRowIndex is 0-based index of last row pushed.
+                // If current is 4 (Meta rows), next is 5 (Header).
+                // So now currentRowIndex is 5.
+                // First item will be at index 6 (Row 7 in Excel).
+                // Formula needs Excel Row Number (1-based).
+                // So if next push is at index `currentRowIndex + 0` (in array), that is Row `currentRowIndex + 1` (in Excel).
+
+                // Wait, let's trace carefully.
+                // rows[4] is Header (Row 5).
+                // Item 1 will be rows[5] (Row 6).
+
+                const startRowExcel = currentRowIndex + 2; // If current is 5 (header), item is at 6. Excel row is 7? No.
+                // Array index 0 = Row 1.
+                // Array index 5 = Row 6. 
+                // So if we push items now, they start at array index `rows.length`.
+                // `rows.length` is currently 5 (0..4 meta + header).
+                // So first item is at index 5 => Row 6.
+
+                // Let's rely on `rows.length` instead of manually tracking `currentRowIndex` to be safer.
+
+                const startRow = rows.length + 1; // Excel Row number for first item
+
                 activeItems.forEach(item => {
                     rows.push([
                         { v: section.title, s: cellStyle },
                         { v: item.name, s: cellStyle },
                         { v: item.quantity, t: 'n', s: numberStyle },
-                        { v: item.price, t: 'n', z: '#,##0', s: numberStyle }, // Formatting as number
+                        { v: item.price, t: 'n', z: '#,##0', s: numberStyle },
                         { v: item.total, t: 'n', z: '#,##0', s: numberStyle }
                     ]);
                 });
+
+                const endRow = rows.length; // Excel Row number for last item
+
                 // Section Subtotal
-                const sectionTotal = activeItems.reduce((a, b) => a + b.total, 0);
+                const formula = `SUM(E${startRow}:E${endRow})`;
+                const subtotalRow = rows.length + 1;
+                sectionTotalCells.push(`E${subtotalRow}`);
+
                 rows.push([
                     { v: '', s: sectionHeaderStyle },
                     { v: 'إجمالي ' + section.title, s: sectionHeaderStyle },
                     { v: '', s: sectionHeaderStyle },
                     { v: '', s: sectionHeaderStyle },
-                    { v: sectionTotal, t: 'n', z: '#,##0', s: { ...sectionHeaderStyle, alignment: { horizontal: "center" } } }
+                    { t: 'n', z: '#,##0', f: formula, s: { ...sectionHeaderStyle, alignment: { horizontal: "center" } } }
                 ]);
+                rows.push([]); // Spacer
             }
         });
 
         // 4. Grand Total
+        const grandTotalFormula = sectionTotalCells.length > 0
+            ? `SUM(${sectionTotalCells.join(',')})`
+            : '0';
+
         rows.push([
             { v: '', s: totalStyle },
             { v: '', s: totalStyle },
             { v: '', s: totalStyle },
             { v: 'الإجمالي النهائي', s: totalStyle },
-            { v: grandTotal, t: 'n', z: '#,##0', s: totalStyle }
+            { t: 'n', z: '#,##0', f: grandTotalFormula, s: totalStyle }
         ]);
 
         const ws = XLSX.utils.aoa_to_sheet(rows);
@@ -108,15 +148,10 @@ export const Summary: React.FC<{ event: EventData }> = ({ event }) => {
     };
 
     const handleExportImage = async () => {
-        // Capture the hidden invoice div instead of root
         const element = document.getElementById('invoice-capture');
         if (element) {
-            // Temporarily show it for capture (if needed, but absolute positioning usually works)
-            // Ideally cloning logic. 
-            // html2canvas works on off-screen elements if they are in the DOM and visible (not display:none)
-
             const canvas = await html2canvas(element, {
-                scale: 2, // Better quality
+                scale: 2,
                 backgroundColor: '#ffffff',
             });
             const data = canvas.toDataURL('image/png');
