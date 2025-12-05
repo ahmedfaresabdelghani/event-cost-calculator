@@ -5,7 +5,7 @@ import { Card } from '../../ui/Card';
 import { Sparkles, History, Upload } from 'lucide-react';
 
 export const WelcomeScreen: React.FC = () => {
-    const { loadEvent, resetApp, setVisited } = useStore();
+    const { loadEvent, setVisited } = useStore();
     const [mode, setMode] = useState<'initial' | 'restore'>('initial');
     const [restoreCode, setRestoreCode] = useState('');
     const [error, setError] = useState('');
