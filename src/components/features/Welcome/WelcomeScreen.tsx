@@ -2,17 +2,13 @@ import React, { useState } from 'react';
 import { useStore } from '../../../context/Store';
 import { Button } from '../../ui/Button';
 import { Card } from '../../ui/Card';
-import { Sparkles, History, ArrowLeft, Upload } from 'lucide-react';
+import { Sparkles, History, Upload } from 'lucide-react';
 
 export const WelcomeScreen: React.FC = () => {
     const { loadEvent, resetApp, setVisited } = useStore();
     const [mode, setMode] = useState<'initial' | 'restore'>('initial');
     const [restoreCode, setRestoreCode] = useState('');
     const [error, setError] = useState('');
-
-    const handleStartNew = () => {
-        resetApp();
-    };
 
     const handleRestore = () => {
         if (!restoreCode.trim()) return;

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { CostItem } from '../../../types';
 import { generateId, formatCurrency } from '../../../utils/helpers';
 import { Button } from '../../ui/Button';
@@ -97,7 +97,6 @@ export const ItemTable: React.FC<Props> = ({ items, onUpdate }) => {
                                 />
                             </td>
                             <td className="py-2 px-1">
-                                {/* Manual toggle could be added here, for now simpler is better: if price/qty changes it updates. If user types here, it becomes manual? Complex. Let's make it calc only for now or simple manual override.*/}
                                 <div className="font-bold text-gray-700 tabular-nums">
                                     {formatCurrency(item.total)}
                                 </div>

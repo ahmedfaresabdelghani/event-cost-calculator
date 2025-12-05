@@ -5,7 +5,7 @@ import { generateId } from '../../../utils/helpers';
 import { Button } from '../../ui/Button';
 import { Section } from './Section';
 import { Summary } from './Summary';
-import { Plus, Download, Save, LogOut } from 'lucide-react';
+import { Plus, Save, LogOut } from 'lucide-react';
 
 export const Calculator: React.FC = () => {
     const { state, updateEvent, generateSaveCode, resetApp } = useStore();
@@ -41,9 +41,6 @@ export const Calculator: React.FC = () => {
 
     const handleSave = () => {
         const code = generateSaveCode();
-        // In a real app, we might show a modal with the code to copy.
-        // For now, let's just alert or log it, or even better use a proper UI
-        // I will implement a "Save Modal" or just a copy action.
         navigator.clipboard.writeText(code).then(() => {
             alert('تم نسخ كود الاسترجاع! احتفظ به في مكان آمن.');
         });

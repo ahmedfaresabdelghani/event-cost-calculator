@@ -1,4 +1,3 @@
-import React from 'react';
 import { useStore } from './context/Store';
 import { MainLayout } from './components/layout/MainLayout';
 import { WelcomeScreen } from './components/features/Welcome/WelcomeScreen';

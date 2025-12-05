@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { AppState, EventData, EventType, Section, CostItem } from '../types';
+import { AppState, EventData, EventType, Section } from '../types';
 import { generateId, encodeData, decodeData } from '../utils/helpers';
 
 interface StoreContextType {

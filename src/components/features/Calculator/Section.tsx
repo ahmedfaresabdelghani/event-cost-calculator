@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
 import { Section as SectionType, CostItem } from '../../../types';
 import { Card } from '../../ui/Card';
-import { ChevronDown, Plus } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import { ItemTable } from './ItemTable';
 import { formatCurrency } from '../../../utils/helpers';
-import { Button } from '../../ui/Button'; // Assuming Button component exists
 
 export const Section: React.FC<{
     section: SectionType;
     onUpdate: (items: CostItem[]) => void;
 }> = ({ section, onUpdate }) => {
-    const [isOpen, setIsOpen] = useState(!section.isCollapsed); // Default open if not collapsed
+    const [isOpen, setIsOpen] = useState(!section.isCollapsed);
 
     const total = section.items
         .filter(i => i.isChecked)
