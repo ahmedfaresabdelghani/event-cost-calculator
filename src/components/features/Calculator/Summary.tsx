@@ -9,7 +9,7 @@ import html2canvas from 'html2canvas';
 
 export const Summary: React.FC<{ event: EventData }> = ({ event }) => {
     const grandTotal = event.sections.reduce((sum, section) => {
-        return sum + section.items.filter(i => i.isChecked).reduce((s, i) => s + i.total, 0);
+        return sum + section.items.filter(i => i.isChecked).reduce((s, i) => s + (Number(i.total) || 0), 0);
     }, 0);
 
     const handleExportExcel = () => {
@@ -180,7 +180,7 @@ export const Summary: React.FC<{ event: EventData }> = ({ event }) => {
                     {event.sections.map(section => {
                         const activeItems = section.items.filter(i => i.isChecked);
                         if (activeItems.length === 0) return null;
-                        const sectionTotal = activeItems.reduce((a, b) => a + b.total, 0);
+                        const sectionTotal = activeItems.reduce((a, b) => a + (Number(b.total) || 0), 0);
 
                         return (
                             <div key={section.id}>

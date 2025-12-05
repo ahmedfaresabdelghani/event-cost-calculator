@@ -13,7 +13,7 @@ export const Section: React.FC<{
 
     const total = section.items
         .filter(i => i.isChecked)
-        .reduce((sum, item) => sum + item.total, 0);
+        .reduce((sum, item) => sum + (Number(item.total) || 0), 0);
 
     return (
         <Card className={`transition-all duration-300 ${isOpen ? 'ring-1 ring-rose-100' : 'hover:bg-gray-50'}`}>
