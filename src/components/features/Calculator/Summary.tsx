@@ -50,19 +50,16 @@ export const Summary: React.FC<{ event: EventData }> = ({ event }) => {
         };
 
         const rows: any[] = [];
-        let currentRowIndex = 0;
 
         // 1. Meta Data
         rows.push([{ v: 'تقرير تكاليف المناسبة', s: headerStyle }]);
         rows.push([{ v: `المناسبة: ${event.customName || 'بدون اسم'}`, s: cellStyle }]);
         rows.push([{ v: `التاريخ: ${new Date().toLocaleDateString('ar-EG')}`, s: cellStyle }]);
         rows.push([]);
-        currentRowIndex += 4; // 4 rows added
 
         // 2. Table Header
         const headers = ['القسم', 'البند', 'العدد', 'السعر', 'الإجمالي'];
         rows.push(headers.map(h => ({ v: h, s: headerStyle })));
-        currentRowIndex += 1;
 
         // 3. Data Rows
         const sectionTotalCells: string[] = [];
@@ -70,27 +67,6 @@ export const Summary: React.FC<{ event: EventData }> = ({ event }) => {
         event.sections.forEach(section => {
             const activeItems = section.items.filter(i => i.isChecked);
             if (activeItems.length > 0) {
-                const sectionStartRow = currentRowIndex + 2; // +1 because logic wants next row, +1 because Excel is 1-based?
-                // Logic: 
-                // currentRowIndex is 0-based index of last row pushed.
-                // If current is 4 (Meta rows), next is 5 (Header).
-                // So now currentRowIndex is 5.
-                // First item will be at index 6 (Row 7 in Excel).
-                // Formula needs Excel Row Number (1-based).
-                // So if next push is at index `currentRowIndex + 0` (in array), that is Row `currentRowIndex + 1` (in Excel).
-
-                // Wait, let's trace carefully.
-                // rows[4] is Header (Row 5).
-                // Item 1 will be rows[5] (Row 6).
-
-                const startRowExcel = currentRowIndex + 2; // If current is 5 (header), item is at 6. Excel row is 7? No.
-                // Array index 0 = Row 1.
-                // Array index 5 = Row 6. 
-                // So if we push items now, they start at array index `rows.length`.
-                // `rows.length` is currently 5 (0..4 meta + header).
-                // So first item is at index 5 => Row 6.
-
-                // Let's rely on `rows.length` instead of manually tracking `currentRowIndex` to be safer.
 
                 const startRow = rows.length + 1; // Excel Row number for first item
 
