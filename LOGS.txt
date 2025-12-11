@@ -1,0 +1,95 @@
+RP/0/RSP0/CPU0:HQ-01NewP02_CI-02#show logging start today | i isis
+Thu Dec 11 16:31:02.045 cairo
+RP/0/RSP0/CPU0:Dec 11 11:47:24.241 cairo: isis[1010]: %ROUTING-ISIS-5-ADJCHANGE : Adjacency to ALX-05ASR01_CI-01 (TenGigE0/1/1/0.115) (L2) Down, Neighbor forgot us 
+RP/0/RSP0/CPU0:Dec 11 11:47:24.257 cairo: isis[1010]: %ROUTING-ISIS-5-ADJCHANGE : Adjacency to ALX-05ASR01_CI-01 (TenGigE0/1/1/0.115) (L2) Up, Restarted 
+RP/0/RSP0/CPU0:Dec 11 11:47:25.985 cairo: isis[1010]: %ROUTING-ISIS-5-ADJCHANGE : Adjacency to ALX-05ASR01_CI-01 (TenGigE0/1/1/0.115) (L2) Down, BFD session DOWN 
+RP/0/RSP0/CPU0:Dec 11 11:47:32.316 cairo: isis[1010]: %ROUTING-ISIS-5-ADJCHANGE : Adjacency to ALX-05ASR01_CI-01 (TenGigE0/1/1/0.115) (L2) Up, New adjacency 
+RP/0/RSP0/CPU0:Dec 11 13:28:29.201 cairo: isis[1010]: %ROUTING-ISIS-5-ADJCHANGE : Adjacency to ALX-05ASR01_CI-01 (TenGigE0/2/0/6.415) (L2) Down, Interface state down 
+RP/0/RSP0/CPU0:Dec 11 13:28:29.259 cairo: isis[1010]: %ROUTING-ISIS-5-ADJCHANGE : Adjacency to ALX-05ASR01_CI-01 (TenGigE0/2/0/6.415) (L2) Up, New adjacency 
+RP/0/RSP0/CPU0:Dec 11 13:28:36.955 cairo: isis[1010]: %ROUTING-ISIS-5-ADJCHANGE : Adjacency to ALX-05ASR01_CI-01 (TenGigE0/2/0/6.415) (L2) Down, Neighbor forgot us 
+RP/0/RSP0/CPU0:Dec 11 13:28:36.968 cairo: isis[1010]: %ROUTING-ISIS-5-ADJCHANGE : Adjacency to ALX-05ASR01_CI-01 (TenGigE0/2/0/6.415) (L2) Up, Restarted 
+RP/0/RSP0/CPU0:Dec 11 15:10:42.759 cairo: isis[1010]: %ROUTING-ISIS-5-ADJCHANGE : Adjacency to ALX-05ASR01_CI-01 (TenGigE0/0/0/7.615) (L2) Down, Interface state down 
+RP/0/RSP0/CPU0:Dec 11 15:10:42.943 cairo: isis[1010]: %ROUTING-ISIS-5-ADJCHANGE : Adjacency to ALX-05ASR01_CI-01 (TenGigE0/0/0/7.615) (L2) Up, New adjacency 
+RP/0/RSP0/CPU0:HQ-01NewP02_CI-02#
+
+
+RP/0/RSP0/CPU0:HQ-01NewP02_CI-02#show int des | i LR
+Thu Dec 11 22:15:35.403 cairo
+Te0/0/0/0          up          up          TNT.ASR01\WAN\10.254.112.61\WAN-68STM1s\LR-666-5th-Active
+Te0/0/0/0.512      up          up          TNT.ASR01\WAN\10.254.112.61\WAN-68STM1s\LR-666-5th-Active
+Te0/0/0/3          up          up          BS.ASR01\WAN\10.254.118.46\WAN-68STM1s\LR-299-3rd-Active 
+Te0/0/0/3.18       up          up          BS.ASR01\WAN\10.254.118.46\WAN-68STM1s\LR-299-3rd-Active 
+Te0/0/0/4          up          up          TNT.ASR01\WAN\10.254.112.42\WAN-68STM1s\LR-96-2nd-Active
+Te0/0/0/4.212      up          up          TNT.ASR01\WAN\10.254.112.42\WAN-68STM1s\LR-96-2nd-Active
+Te0/0/0/7          up          up          ALX.ASR01\WAN\10.254.115.77\WAN-68STM1s\LR-665-6th-Active 
+Te0/0/0/7.615      up          up          ALX.ASR01\WAN\10.254.115.77\WAN-68STM1s\LR-665-6th-Active 
+Te0/1/0/0          up          up          MKT.ASR1\WAN\10.254.113.50\WAN-68STM1s\LR-664-4th-Active
+Te0/1/0/0.513      up          up          MKT.ASR1\WAN\10.254.113.50\WAN-68STM1s\LR-664-4th-Active
+Te0/1/0/3          up          up          TNT.ASR01\WAN\10.254.112.38\WAN-68STM1s\LR-179-Active 
+Te0/1/0/3.112      up          up          TNT.ASR01\WAN\10.254.112.38\WAN-68STM1s\LR-179-Active 
+Te0/1/0/5          up          up          ALX.ASR02\WAN\10.254.115.61\WAN-68STM1s-LR-177-2nd-Active
+Te0/1/0/5.215      up          up          ALX.ASR01\WAN\10.254.115.61\WAN-68STM1s-LR-177-2nd-Active
+Te0/1/1/0          up          up          ALX.ASR01\WAN\10.254.115.57\-WAN-68STM1s-LR-100-Active   
+Te0/1/1/0.115      up          up          ALX.ASR01\WAN\10.254.115.57\-WAN-68STM1s-LR-100-Active   
+Te0/1/1/1          up          up          MKT.ASR01\WAN\10.254.113.46\WAN-68STM1s-LR-95-Active 
+Te0/1/1/1.213      up          up          MKT.ASR01\WAN\10.254.113.46\WAN-68STM1s-LR-95-Active 
+Te0/1/1/2          down        down        BS.ASR01\WAN\10.254.118.77\WAN-68STM1s\LR-178-2nd-Active  
+Te0/1/1/2.318      down        down        BS.ASR01\WAN\10.254.118.77\WAN-68STM1s\LR-178-2nd-Active  
+Te0/1/1/3          down        down        BS.PE01\WAN\10.254.118.70\WAN-68STM1s\LR-159-Active 
+Te0/1/1/3.218      down        down        BS.PE01\WAN\10.254.118.70\WAN-68STM1s\LR-159-Active
+Te0/1/1/4          up          up          ALX.ASR01\WAN\10.254.115.73\WAN-68STM1s\LR-717-5th-Active
+Te0/1/1/4.515      up          up          ALX.ASR01\WAN\10.254.115.73\WAN-68STM1s\LR-717-5th-Active  
+Te0/1/1/5          up          up          MKT.ASR1\WAN\10.254.113.54\WAN-68STM1s\LR-716-5th-Active
+Te0/1/1/5.613      up          up          MKT.ASR1\WAN\10.254.113.54\WAN-68STM1s\LR-716-5th-Active
+Te0/2/0/0          up          up          MKT.ASR1\WAN\10.254.113.38\WAN-68STM1s\LR-298-2nd-Active 
+Te0/2/0/0.313      up          up          MKT.ASR1\WAN\10.254.113.38\WAN-68STM1s\LR-298-2nd-Active 
+Te0/2/0/1          down        down        MNS.ASR1\WAN\10.254.119.18\WAN-68STM1s\LR-300-2nd-Active
+Te0/2/0/1.219      down        down        MNS.ASR1\WAN\10.254.119.18\WAN-68STM1s\LR-300-2nd-Active 
+Te0/2/0/2          down        down        MNS.ASR1\WAN\10.254.119.21\WAN-68STM1s\LR-494-3rd-Active
+Te0/2/0/2.319      down        down        MNS.ASR1\WAN\10.254.119.21\WAN-68STM1s\LR-494-3rd-Active  
+Te0/2/0/3          admin-down  admin-down  BS.ASR01\WAN\10.254.118.82\WAN\LR-456-6th-Repalced-by-100G-Down
+Te0/2/0/3.418      admin-down  admin-down  BS.ASR01\WAN\10.254.118.82\WAN\LR-456-6th-Repalced-by-100G-Down
+Te0/2/0/4          up          up          ALX.ASR01\WAN\10.254.115.65\WAN-68STM1s\LR-455-3rd-Active
+Te0/2/0/4.315      up          up          ALX.ASR01\WAN\10.254.115.65\WAN-68STM1s\LR-455-3rd-Active
+Te0/2/0/5          up          up          BS.PE01\WAN\10.254.118.85\WAN-68STM1s\LR-457-4th-Active 
+Te0/2/0/5.518      up          up          BS.PE01\WAN\10.254.118.85\WAN-68STM1s\LR-457-4th-Active 
+Te0/2/0/6          up          up          ALX.ASR01\WAN\10.254.115.69\WAN-68STM1s\LR-493-4th-Active
+Te0/2/0/6.415      up          up          ALX.ASR01\WAN\10.254.115.69\WAN-68STM1s\LR-493-4th-Active
+Te0/2/0/7          up          up          MNS.ASR1\WAN\10.254.119.33\WAN-68STM1s\LR-818-5th-Active  
+Te0/2/0/7.619      up          up          MNS.ASR1\WAN\10.254.119.33\WAN-68STM1s\LR-818-5th-Active   
+Te0/2/0/8          up          up          MNS.ASR1\WAN\10.254.119.37\WAN-68STM1s\LR-819-6th-Active  
+Te0/2/0/8.719      up          up          MNS.ASR1\WAN\10.254.119.37\WAN-68STM1s\LR-819-6th-Active   
+Te0/2/0/9          down        down        TNT.ASR01\WAN\10.254.112.46\WAN-68STM1s\LR-495-3rd-Active
+Te0/2/0/9.312      down        down        TNT.ASR01\WAN\10.254.112.46\WAN-68STM1s\LR-495-3rd-Active
+Te0/2/0/10         down        down        TNT.ASR01\WAN\10.254.112.50\WAN-68STM1s\LR-552-4th-Active
+Te0/2/0/10.412     down        down        TNT.ASR01\WAN\10.254.112.50\WAN-68STM1s\LR-552-4th-Active
+Te0/2/0/11         up          up          BS.PE01\WAN\10.254.118.89\WAN-68STM1s\LR-458-5th-Active 
+Te0/2/0/11.618     up          up          BS.PE01\WAN\10.254.118.89\WAN-68STM1s\LR-458-5th-Active  
+Te0/2/0/12         down        down        MNS.ASR1\WAN\10.254.119.25\WAN-68STM1s\LR-551-4th-Active
+Te0/2/0/12.519     down        down        MNS.ASR1\WAN\10.254.119.25\WAN-68STM1s\LR-551-4th-Active  
+Te0/2/0/13         up          up          MNS.ASR1\WAN\10.254.119.14\-WAN-68STM1s-LR-112-Active
+Te0/2/0/13.119     up          up          MNS.ASR1\WAN\10.254.119.14\-WAN-68STM1s-LR-112-Active  
+Te0/2/0/14         up          up          MKT.ASR01\WAN\10.254.113.42\WAN\LR-492-3rd-Active
+Te0/2/0/14.413     up          up          MKT.ASR01\WAN\10.254.113.42\WAN\LR-492-3rd-Active
+Te0/2/0/15         up          up          TNT.ASR01\WAN\10.254.112.66\WAN-68STM1s\LR-718-6th-Active
+Te0/2/0/15.612     up          up          TNT.ASR01\WAN\10.254.112.66\WAN-68STM1s\LR-718-6th-Active 
+Te0/2/0/16         up          up          MKT.ASR1\WAN\10.254.113.58\WAN-68STM1s\LR-599-6th-Active 
+Te0/2/0/16.713     up          up          MKT.ASR1\WAN\10.254.113.58\WAN-68STM1s\LR-599-6th-Active 
+Te0/2/0/18         up          up          ALX.ASR01\WAN\10.254.115.90\WAN-68STM1s\LR-825-7th-Active
+Te0/2/0/18.915     up          up          ALX.ASR01\WAN\10.254.115.90\WAN-68STM1s\LR-825-7th-Active
+Te0/2/0/19         up          up          MKT.ASR1\WAN\10.254.113.78\WAN-68STM1s\LR-1107-10th-Active 
+Te0/2/0/19.913     up          up          MKT.ASR1\WAN\10.254.113.78\WAN-68STM1s\LR-1107-10th-Active 
+Te0/2/0/20         up          up          MKT.ASR1\WAN\10.254.113.66\WAN-68STM1s\LR-1108-8th-Active 
+Te0/2/0/20.1013    up          up          MKT.ASR1\WAN\10.254.113.66\WAN-68STM1s\LR-1108-8th-Active 
+Te0/2/0/21         up          up          MKT.ASR1\WAN\10.254.113.66\WAN-68STM1s\LR-822-7th-Active 
+Te0/2/0/21.1213    up          up          MKT.ASR1\WAN\10.254.113.74\WAN-68STM1s\LR-822-7th-Active 
+Te0/2/0/22         up          up          MKT.ASR1\WAN\10.254.113.66\WAN-68STM1s\LR-823-9th-Active 
+Te0/2/0/22.1113    up          up          MKT.ASR1\WAN\10.254.113.70\WAN-68STM1s\LR-823-9th-Active 
+Hu0/6/0/2          up          up          AST.ASR01\WAN\10.254.158.6\WAN-680STM1s\LR-54-1st-Active
+Hu0/6/0/2.211      up          up          AST.ASR01\WAN\10.254.158.6\WAN-680STM1s\LR-54-1st-Active
+Hu0/6/0/3          up          up          TNT.ASR01\WAN\10.254.112.70\WAN-680STM1s\LR-34-7th-Active  
+Hu0/6/0/3.712      up          up          TNT.ASR01\WAN\10.254.112.70\WAN-680STM1s\LR-34-7th-Active  
+Hu0/7/0/2          up          up          BS.ASR01\WAN\10.254.118.94\WAN-680STM1s\LR-11-Active
+Hu0/7/0/2.718      up          up          BS.ASR01\WAN\10.254.118.94\WAN-680STM1s\LR-11-Active
+Hu0/7/0/3          up          up          ALX.ASR01\WAN\10.254.115.82\WAN-680STM1s\LR-31-100G-Active
+Hu0/7/0/3.715      up          up          ALX.ASR01\WAN\10.254.115.82\WAN-680STM1s\LR-31-100G-Active
